@@ -1,0 +1,9 @@
+project-includes = [
+    "**/*.py*",
+    "**/*.ipynb",
+]
+python-interpreter-path = "D:\\event_registration_system\\venv\\Scripts\\python.exe"
+site-package-path = [
+    "D:\\event_registration_system\\venv\\Lib\\site-packages"
+]
+ignore-missing-imports = [".*"]

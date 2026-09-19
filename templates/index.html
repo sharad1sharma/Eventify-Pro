@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventify Pro | Next-Gen Event Registration</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: rgba(18, 24, 38, 0.75);
+            --bg-card-hover: rgba(28, 36, 56, 0.85);
+            --border-glow: rgba(99, 102, 241, 0.25);
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger-glow: rgba(239, 68, 68, 0.3);
+            --success-glow: rgba(34, 197, 94, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(45, 212, 191, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Container */
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Header Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--primary-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.6rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .tab-btn.active {
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.4rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.7rem 1.4rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            padding: 3.5rem 2.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.15;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin-bottom: 2rem;
+        }
+
+        /* Search & Filter Controls */
+        .controls-bar {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.85rem 1.25rem 0.85rem 3rem;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Event Cards Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.75rem;
+        }
+
+        .event-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 1.75rem;
+            transition: all 0.35 ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            backdrop-filter: blur(12px);
+        }
+
+        .event-card:hover {
+            transform: translateY(-6px);
+            background: var(--bg-card-hover);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 12px 35px 0 rgba(99, 102, 241, 0.2);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-upcoming {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-past {
+            background: rgba(148, 163, 184, 0.15);
+            color: #cbd5e1;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .badge-full {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .event-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0.85rem 0 0.5rem;
+            color: #ffffff;
+        }
+
+        .event-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin-bottom: 0.6rem;
+        }
+
+        .meta-item i {
+            color: #a855f7;
+            width: 18px;
+        }
+
+        /* Capacity Progress Bar */
+        .capacity-section {
+            margin: 1.25rem 0;
+        }
+
+        .capacity-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+
+        .card-footer {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .toast {
+            padding: 1rem 1.5rem;
+            border-radius: 14px;
+            background: #1e293b;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        .toast-success { border-color: #22c55e; }
+        .toast-error { border-color: #ef4444; }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Modal Backdrop */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(9, 13, 22, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 480px;
+            padding: 2.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #cbd5e1;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #a855f7;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <a href="#" class="logo-group">
+            <div class="logo-icon">
+                <i data-lucide="sparkles"></i>
+            </div>
+            <span class="logo-text">Eventify Pro</span>
+        </a>
+
+        <div class="nav-actions">
+            <button class="tab-btn active" id="tab-explore" onclick="switchTab('explore')">
+                <i data-lucide="compass"></i> Explore Events
+            </button>
+            <button class="tab-btn" id="tab-my-registrations" onclick="switchTab('my-registrations')">
+                <i data-lucide="ticket"></i> My Registrations
+            </button>
+            <div id="auth-section">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- Hero Section -->
+        <section class="glass-panel hero-banner">
+            <h1 class="hero-title">Discover & Reserve Next-Gen Events</h1>
+            <p class="hero-subtitle">Seamless event registration platform powered by Django REST Framework. Explore tech conferences, workshops, and community meetups.</p>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn-primary" onclick="openCreateModal()">
+                    <i data-lucide="plus-circle"></i> Create Event
+                </button>
+            </div>
+        </section>
+
+        <!-- Search & Filter Controls -->
+        <div class="controls-bar">
+            <div class="search-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="Search events by title, venue or description..." oninput="handleSearch()">
+            </div>
+            <div class="filter-group">
+                <button class="btn-secondary" id="filter-upcoming" onclick="toggleUpcomingFilter()">
+                    <i data-lucide="calendar"></i> Upcoming Only
+                </button>
+            </div>
+        </div>
+
+        <!-- Explore Events View -->
+        <div id="view-explore">
+            <div class="grid-container" id="events-grid">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+
+        <!-- My Registrations View -->
+        <div id="view-my-registrations" style="display: none;">
+            <div class="grid-container" id="registrations-grid">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Auth Modal (Login / Sign Up) -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="glass-panel modal-card">
+            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem;">
+                <button type="button" class="tab-btn active" id="auth-tab-signin" onclick="switchAuthTab('signin')" style="font-size: 1.1rem; padding: 0.4rem 0.8rem;">Sign In</button>
+                <button type="button" class="tab-btn" id="auth-tab-signup" onclick="switchAuthTab('signup')" style="font-size: 1.1rem; padding: 0.4rem 0.8rem;">Create Account</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <form id="form-signin" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="login-username" required placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" required placeholder="Enter password">
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+                    <button type="button" class="btn-secondary" onclick="closeLoginModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Sign In</button>
+                </div>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="form-signup" onsubmit="handleSignUp(event)" style="display: none;">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="signup-username" required placeholder="Choose a username">
+                </div>
+                <div class="form-group">
+                    <label>Email (Optional)</label>
+                    <input type="email" id="signup-email" placeholder="user@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="signup-password" required placeholder="Choose a password">
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+                    <button type="button" class="btn-secondary" onclick="closeLoginModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div class="modal-overlay" id="create-modal">
+        <div class="glass-panel modal-card" style="max-width: 580px;">
+            <h2 style="margin-bottom: 1.5rem; font-weight: 700;">Create New Event</h2>
+            <form onsubmit="handleCreateEvent(event)">
+                <div class="form-group">
+                    <label>Event Title</label>
+                    <input type="text" id="event-title" required placeholder="e.g. AI & Cloud Summit 2026">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="event-desc" rows="3" placeholder="Brief event description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Venue / Platform</label>
+                    <input type="text" id="event-venue" placeholder="e.g. Main Auditorium / Zoom">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Start Time</label>
+                        <input type="datetime-local" id="event-start" required>
+                    </div>
+                    <div class="form-group">
+                        <label>End Time</label>
+                        <input type="datetime-local" id="event-end" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Capacity (0 = Unlimited)</label>
+                    <input type="number" id="event-capacity" value="50" min="0">
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+                    <button type="button" class="btn-secondary" onclick="closeCreateModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Publish Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        let eventsData = [];
+        let myRegistrations = [];
+        let upcomingFilterActive = false;
+        let authToken = localStorage.getItem('auth_token') || '';
+        let authUsername = localStorage.getItem('auth_username') || '';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            updateAuthUI();
+            fetchEvents();
+            fetchRegistrations();
+        });
+
+        function updateAuthUI() {
+            const container = document.getElementById('auth-section');
+            if (authToken) {
+                container.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="font-size: 0.9rem; font-weight: 600; color: #a855f7;">
+                            <i data-lucide="user" style="vertical-align: middle; width: 16px;"></i> ${authUsername}
+                        </span>
+                        <button class="btn-secondary" onclick="handleLogout()" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Logout</button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <button class="btn-primary" onclick="openLoginModal()" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Sign In</button>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        async function fetchEvents() {
+            try {
+                let url = '/api/events/';
+                if (upcomingFilterActive) {
+                    url += '?upcoming=true';
+                }
+                const res = await fetch(url);
+                const data = await res.json();
+                eventsData = data.results || data;
+                renderEvents();
+            } catch (err) {
+                showToast('Failed to load events', 'error');
+            }
+        }
+
+        async function fetchRegistrations() {
+            if (!authToken) return;
+            try {
+                const res = await fetch('/api/registrations/', {
+                    headers: { 'Authorization': 'Token ' + authToken }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    myRegistrations = data.results || data;
+                    renderRegistrations();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function renderEvents() {
+            const grid = document.getElementById('events-grid');
+            const search = document.getElementById('search-input').value.toLowerCase();
+            
+            const filtered = eventsData.filter(e => 
+                e.title.toLowerCase().includes(search) || 
+                (e.description && e.description.toLowerCase().includes(search)) ||
+                (e.venue && e.venue.toLowerCase().includes(search))
+            );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <i data-lucide="calendar-x"></i>
+                        <h3>No events found</h3>
+                        <p>Try adjusting your search query or filter options.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            grid.innerHTML = filtered.map(e => {
+                const isFull = e.is_full;
+                const isPast = e.is_past;
+                const capacity = e.capacity === 0 ? 'Unlimited' : e.capacity;
+                const confirmed = e.confirmed_count || 0;
+                const percent = e.capacity === 0 ? 30 : Math.min(100, Math.round((confirmed / e.capacity) * 100));
+
+                let badgeHtml = `<span class="badge badge-upcoming"><i data-lucide="clock"></i> Upcoming</span>`;
+                if (isPast) {
+                    badgeHtml = `<span class="badge badge-past"><i data-lucide="check-circle"></i> Past Event</span>`;
+                } else if (isFull) {
+                    badgeHtml = `<span class="badge badge-full"><i data-lucide="alert-circle"></i> Fully Booked</span>`;
+                }
+
+                const startDate = new Date(e.start_time).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+
+                return `
+                    <div class="event-card">
+                        <div>
+                            <div>${badgeHtml}</div>
+                            <h3 class="event-title">${escapeHtml(e.title)}</h3>
+                            <p class="event-desc">${escapeHtml(e.description || 'No description provided.')}</p>
+                            
+                            <div class="meta-item">
+                                <i data-lucide="calendar"></i>
+                                <span>${startDate}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i data-lucide="map-pin"></i>
+                                <span>${escapeHtml(e.venue || 'Online Event')}</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="capacity-section">
+                                <div class="capacity-header">
+                                    <span>Attendees</span>
+                                    <span>${confirmed} / ${capacity}</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: ${percent}%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <span style="font-size: 0.85rem; color: var(--text-muted);">Organized by <b>${escapeHtml(e.organizer ? e.organizer.username : 'Organizer')}</b></span>
+                                <button class="btn-primary" 
+                                    ${(isFull || isPast) ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''} 
+                                    onclick="registerForEvent(${e.id})">
+                                    <i data-lucide="ticket"></i> Register
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function renderRegistrations() {
+            const grid = document.getElementById('registrations-grid');
+            if (myRegistrations.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <i data-lucide="ticket-x"></i>
+                        <h3>No active registrations</h3>
+                        <p>You haven't registered for any events yet. Explore upcoming events!</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            grid.innerHTML = myRegistrations.map(r => {
+                const isConfirmed = r.status === 'confirmed';
+                return `
+                    <div class="event-card">
+                        <div>
+                            <span class="badge ${isConfirmed ? 'badge-upcoming' : 'badge-past'}">
+                                ${r.status}
+                            </span>
+                            <h3 class="event-title">${escapeHtml(r.event_title || 'Event #' + r.event)}</h3>
+                            <div class="meta-item" style="margin-top: 1rem;">
+                                <i data-lucide="calendar"></i>
+                                <span>${new Date(r.event_start_time || Date.now()).toLocaleString()}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i data-lucide="map-pin"></i>
+                                <span>${escapeHtml(r.event_venue || 'Venue')}</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Registered on ${new Date(r.registered_at).toLocaleDateString()}</span>
+                            ${isConfirmed ? `
+                                <button class="btn-secondary" style="color: #ef4444; border-color: rgba(239,68,68,0.3);" onclick="cancelRegistration(${r.id})">
+                                    <i data-lucide="x"></i> Cancel
+                                </button>
+                            ` : '<span style="font-size:0.85rem; color:#ef4444;">Cancelled</span>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        async function registerForEvent(eventId) {
+            if (!authToken) {
+                showToast('Please sign in to register for events', 'error');
+                openLoginModal();
+                return;
+            }
+
+            try {
+                const res = await fetch(`/api/events/${eventId}/register/`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Token ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    showToast('Successfully registered for event!', 'success');
+                    fetchEvents();
+                    fetchRegistrations();
+                } else {
+                    showToast(data.detail || 'Registration failed', 'error');
+                }
+            } catch (err) {
+                showToast('Network error during registration', 'error');
+            }
+        }
+
+        async function cancelRegistration(registrationId) {
+            if (!authToken) return;
+            try {
+                const res = await fetch(`/api/registrations/${registrationId}/`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': 'Token ' + authToken }
+                });
+                if (res.ok) {
+                    showToast('Registration cancelled', 'success');
+                    fetchEvents();
+                    fetchRegistrations();
+                }
+            } catch (err) {
+                showToast('Failed to cancel registration', 'error');
+            }
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const res = await fetch('/api/auth/token/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+                if (res.ok && data.token) {
+                    authToken = data.token;
+                    authUsername = username;
+                    localStorage.setItem('auth_token', authToken);
+                    localStorage.setItem('auth_username', authUsername);
+                    showToast(`Welcome back, ${username}!`, 'success');
+                    closeLoginModal();
+                    updateAuthUI();
+                    fetchRegistrations();
+                } else {
+                    showToast('Invalid credentials', 'error');
+                }
+            } catch (err) {
+                showToast('Login failed', 'error');
+            }
+        }
+
+        function switchAuthTab(mode) {
+            const isSignIn = mode === 'signin';
+            document.getElementById('auth-tab-signin').classList.toggle('active', isSignIn);
+            document.getElementById('auth-tab-signup').classList.toggle('active', !isSignIn);
+            document.getElementById('form-signin').style.display = isSignIn ? 'block' : 'none';
+            document.getElementById('form-signup').style.display = isSignIn ? 'none' : 'block';
+        }
+
+        async function handleSignUp(e) {
+            e.preventDefault();
+            const username = document.getElementById('signup-username').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            try {
+                const res = await fetch('/api/auth/register/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    showToast('Account created successfully! Signing you in...', 'success');
+                    // Automatically sign in after registration
+                    document.getElementById('login-username').value = username;
+                    document.getElementById('login-password').value = password;
+                    handleLogin(e);
+                } else {
+                    showToast(data.detail || 'Registration failed', 'error');
+                }
+            } catch (err) {
+                showToast('Registration failed', 'error');
+            }
+        }
+
+        function handleLogout() {
+            authToken = '';
+            authUsername = '';
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('auth_username');
+            myRegistrations = [];
+            updateAuthUI();
+            switchTab('explore');
+            showToast('Logged out successfully', 'success');
+        }
+
+        async function handleCreateEvent(e) {
+            e.preventDefault();
+            if (!authToken) {
+                showToast('Please sign in first', 'error');
+                openLoginModal();
+                return;
+            }
+
+            const body = {
+                title: document.getElementById('event-title').value,
+                description: document.getElementById('event-desc').value,
+                venue: document.getElementById('event-venue').value,
+                start_time: document.getElementById('event-start').value,
+                end_time: document.getElementById('event-end').value,
+                capacity: parseInt(document.getElementById('event-capacity').value) || 0
+            };
+
+            try {
+                const res = await fetch('/api/events/', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Token ' + authToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    showToast('Event published successfully!', 'success');
+                    closeCreateModal();
+                    fetchEvents();
+                } else {
+                    showToast(data.detail || 'Failed to create event. Staff/organizer permission required.', 'error');
+                }
+            } catch (err) {
+                showToast('Error creating event', 'error');
+            }
+        }
+
+        function switchTab(tab) {
+            document.getElementById('tab-explore').classList.toggle('active', tab === 'explore');
+            document.getElementById('tab-my-registrations').classList.toggle('active', tab === 'my-registrations');
+            
+            document.getElementById('view-explore').style.display = tab === 'explore' ? 'block' : 'none';
+            document.getElementById('view-my-registrations').style.display = tab === 'my-registrations' ? 'block' : 'none';
+        }
+
+        function toggleUpcomingFilter() {
+            upcomingFilterActive = !upcomingFilterActive;
+            const btn = document.getElementById('filter-upcoming');
+            btn.style.background = upcomingFilterActive ? 'rgba(99, 102, 241, 0.3)' : 'rgba(255, 255, 255, 0.08)';
+            btn.style.borderColor = upcomingFilterActive ? '#6366f1' : 'rgba(255, 255, 255, 0.15)';
+            fetchEvents();
+        }
+
+        function handleSearch() {
+            renderEvents();
+        }
+
+        function openLoginModal() { document.getElementById('login-modal').style.display = 'flex'; }
+        function closeLoginModal() { document.getElementById('login-modal').style.display = 'none'; }
+        function openCreateModal() { document.getElementById('create-modal').style.display = 'flex'; }
+        function closeCreateModal() { document.getElementById('create-modal').style.display = 'none'; }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'alert-triangle'}"></i> ${message}`;
+            container.appendChild(toast);
+            lucide.createIcons();
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        function escapeHtml(str) {
+            return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+</body>
+</html>
