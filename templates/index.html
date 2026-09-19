@@ -686,11 +686,16 @@
             const grid = document.getElementById('events-grid');
             const search = document.getElementById('search-input').value.toLowerCase();
             
-            const filtered = eventsData.filter(e => 
-                e.title.toLowerCase().includes(search) || 
-                (e.description && e.description.toLowerCase().includes(search)) ||
-                (e.venue && e.venue.toLowerCase().includes(search))
-            );
+            const filtered = eventsData.filter(e => {
+                const matchesSearch = e.title.toLowerCase().includes(search) || 
+                    (e.description && e.description.toLowerCase().includes(search)) ||
+                    (e.venue && e.venue.toLowerCase().includes(search));
+                
+                const isUpcoming = !e.is_past && (new Date(e.start_time) >= new Date());
+                const matchesUpcoming = !upcomingFilterActive || isUpcoming;
+                
+                return matchesSearch && matchesUpcoming;
+            });
 
             if (filtered.length === 0) {
                 grid.innerHTML = `
@@ -942,12 +947,15 @@
                 return;
             }
 
+            const rawStart = document.getElementById('event-start').value;
+            const rawEnd = document.getElementById('event-end').value;
+
             const body = {
                 title: document.getElementById('event-title').value,
                 description: document.getElementById('event-desc').value,
                 venue: document.getElementById('event-venue').value,
-                start_time: document.getElementById('event-start').value,
-                end_time: document.getElementById('event-end').value,
+                start_time: rawStart ? new Date(rawStart).toISOString() : null,
+                end_time: rawEnd ? new Date(rawEnd).toISOString() : null,
                 capacity: parseInt(document.getElementById('event-capacity').value) || 0
             };
 
@@ -967,11 +975,28 @@
                     closeCreateModal();
                     fetchEvents();
                 } else {
-                    showToast(data.detail || 'Failed to create event. Staff/organizer permission required.', 'error');
+                    showToast(formatApiError(data), 'error');
                 }
             } catch (err) {
                 showToast('Error creating event', 'error');
             }
+        }
+
+        function formatApiError(data) {
+            if (typeof data === 'string') return data;
+            if (data && data.detail) return data.detail;
+            if (data && typeof data === 'object') {
+                let msgs = [];
+                for (let key in data) {
+                    if (Array.isArray(data[key])) {
+                        msgs.push(`${key}: ${data[key].join(', ')}`);
+                    } else if (typeof data[key] === 'string') {
+                        msgs.push(`${key}: ${data[key]}`);
+                    }
+                }
+                if (msgs.length > 0) return msgs.join(' | ');
+            }
+            return 'Failed to process request';
         }
 
         function switchTab(tab) {
@@ -985,8 +1010,11 @@
         function toggleUpcomingFilter() {
             upcomingFilterActive = !upcomingFilterActive;
             const btn = document.getElementById('filter-upcoming');
-            btn.style.background = upcomingFilterActive ? 'rgba(99, 102, 241, 0.3)' : 'rgba(255, 255, 255, 0.08)';
+            btn.style.background = upcomingFilterActive ? 'rgba(99, 102, 241, 0.4)' : 'rgba(255, 255, 255, 0.08)';
             btn.style.borderColor = upcomingFilterActive ? '#6366f1' : 'rgba(255, 255, 255, 0.15)';
+            btn.innerHTML = `<i data-lucide="calendar"></i> ${upcomingFilterActive ? 'Showing Upcoming Only' : 'Upcoming Only'}`;
+            lucide.createIcons();
+            renderEvents();
             fetchEvents();
         }
 
