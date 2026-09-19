@@ -123,3 +123,11 @@ Run static type checking with Pyrefly:
 ```bash
 pyrefly check
 ```
+
+
+
+
+
+
+<img width="1510" height="818" alt="Screenshot 2026-09-19 154214" src="https://github.com/user-attachments/assets/ff9609ba-695a-458b-9c97-909198ae12b6" />
+
