@@ -1,3 +1,9 @@
+
+
+<img width="1510" height="818" alt="Screenshot 2026-09-19 154214" src="https://github.com/user-attachments/assets/ff9609ba-695a-458b-9c97-909198ae12b6" />
+
+
+
 # Event Registration System
 
 A full-stack Event Management & Registration Platform built with **Django 5.x**, **Django REST Framework**, and a modern **Glassmorphism Single Page Web Interface**.
@@ -126,8 +132,4 @@ pyrefly check
 
 
 
-
-
-
-<img width="1510" height="818" alt="Screenshot 2026-09-19 154214" src="https://github.com/user-attachments/assets/ff9609ba-695a-458b-9c97-909198ae12b6" />
 
