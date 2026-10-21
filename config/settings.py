@@ -70,10 +70,15 @@ ASGI_APPLICATION = "config.asgi.application"
 IS_VERCEL = bool(os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"))
 if IS_VERCEL:
     import shutil
-    db_file = Path("/tmp") / "db.sqlite3"
+    import tempfile
+    temp_dir = Path(tempfile.gettempdir())
+    db_file = temp_dir / "db.sqlite3"
     seed_db = BASE_DIR / "db.sqlite3"
     if not db_file.exists() and seed_db.exists():
-        shutil.copyfile(seed_db, db_file)
+        try:
+            shutil.copyfile(seed_db, db_file)
+        except Exception:
+            pass
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
