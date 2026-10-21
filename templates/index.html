@@ -463,6 +463,45 @@
             margin-bottom: 1rem;
             opacity: 0.5;
         }
+
+        /* Footer */
+        footer {
+            margin-top: 5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(9, 13, 22, 0.75);
+            backdrop-filter: blur(16px);
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .footer-legal {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 650px;
+        }
+
+        .footer-copyright {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #cbd5e1;
+        }
+
+        .footer-author {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
@@ -529,6 +568,14 @@
             </div>
         </div>
     </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p class="footer-legal">All Rights Reserved. All other trademarks and copyrights are the property of their respective holders.</p>
+            <p class="footer-copyright">Copyright &copy; 2026 <span class="footer-author">Sharad Sharma</span>.</p>
+        </div>
+    </footer>
 
     <!-- Auth Modal (Login / Sign Up) -->
     <div class="modal-overlay" id="login-modal">

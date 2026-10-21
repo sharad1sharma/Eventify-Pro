@@ -1,5 +1,8 @@
+# pyrefly: ignore [untyped-import]
 import django.db.models.deletion
+# pyrefly: ignore [untyped-import]
 from django.conf import settings
+# pyrefly: ignore [untyped-import]
 from django.db import migrations, models
 
 
